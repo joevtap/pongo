@@ -28,11 +28,13 @@ func (b *Ball) Move(game *Game) {
 	b.Y += b.SpeedY
 
 	if b.X+b.Radius > 320 {
+		game.cpuScore++
 		game.Reset()
 	}
 
 	if b.X-b.Radius < 0 {
-		b.ReverseX()
+		game.playerScore++
+		game.Reset()
 	}
 
 	if b.Y-b.Radius < 0 || b.Y+b.Radius > 240 {
@@ -40,13 +42,20 @@ func (b *Ball) Move(game *Game) {
 	}
 
 	if b.Collides(game.player) {
-		game.score++
+		b.ReverseX()
+	}
+
+	if b.Collides(game.cpu) {
 		b.ReverseX()
 	}
 }
 
-func (b *Ball) Collides(paddle Paddle) bool {
+func (b *Ball) CollidesWithCpu(paddle CpuPaddle) bool {
 	return b.X+b.Radius > paddle.X && b.X-b.Radius < paddle.X+paddle.Width && b.Y+b.Radius > paddle.Y && b.Y-b.Radius < paddle.Y+paddle.Height
+}
+
+func (b Ball) Collides(ballCollider BallCollider) bool {
+	return ballCollider.Collides(b)
 }
 
 func (b *Ball) ReverseX() {
@@ -58,5 +67,5 @@ func (b *Ball) ReverseY() {
 }
 
 func (b Ball) Draw(screen *ebiten.Image) {
-	vector.DrawFilledCircle(screen, b.X, b.Y, b.Radius, color.RGBA{255, 255, 255, 255}, true)
+	vector.DrawFilledCircle(screen, b.X, b.Y, b.Radius, color.RGBA{255, 255, 255, 255}, false)
 }
