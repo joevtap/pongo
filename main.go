@@ -58,13 +58,29 @@ func (g *Game) RandomBall() {
 	r := rand.Intn(4)
 
 	if r == 0 {
-		g.ball = *NewBall(screenWidth/2, screenHeight/2, 5, ballSpeed, ballSpeed)
+		g.ball = *NewBall(
+			Vector2D{X: ballSpeed, Y: ballSpeed},
+			Vector2D{X: screenWidth / 2, Y: screenHeight / 2},
+			5,
+		)
 	} else if r == 1 {
-		g.ball = *NewBall(screenWidth/2, screenHeight/2, 5, -ballSpeed, -ballSpeed)
+		g.ball = *NewBall(
+			Vector2D{X: -ballSpeed, Y: ballSpeed},
+			Vector2D{X: screenWidth / 2, Y: screenHeight / 2},
+			5,
+		)
 	} else if r == 2 {
-		g.ball = *NewBall(screenWidth/2, screenHeight/2, 5, ballSpeed, -ballSpeed)
+		g.ball = *NewBall(
+			Vector2D{X: ballSpeed, Y: -ballSpeed},
+			Vector2D{X: screenWidth / 2, Y: screenHeight / 2},
+			5,
+		)
 	} else {
-		g.ball = *NewBall(screenWidth/2, screenHeight/2, 5, -ballSpeed, ballSpeed)
+		g.ball = *NewBall(
+			Vector2D{X: -ballSpeed, Y: -ballSpeed},
+			Vector2D{X: screenWidth / 2, Y: screenHeight / 2},
+			5,
+		)
 	}
 }
 

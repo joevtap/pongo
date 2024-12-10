@@ -48,7 +48,7 @@ func (p Paddle) Draw(screen *ebiten.Image) {
 }
 
 func (p Paddle) Collides(ball Ball) bool {
-	return ball.X+ball.Radius > p.X && ball.X-ball.Radius < p.X+p.Width && ball.Y+ball.Radius > p.Y && ball.Y-ball.Radius < p.Y+p.Height
+	return ball.Position.X+ball.Radius > p.X && ball.Position.X-ball.Radius < p.X+p.Width && ball.Position.Y+ball.Radius > p.Y && ball.Position.Y-ball.Radius < p.Y+p.Height
 }
 
 type CpuPaddle struct {
@@ -66,11 +66,11 @@ func NewCpuPaddle(x, y, width, height float32) *CpuPaddle {
 }
 
 func (c *CpuPaddle) Move(g *Game) {
-	if g.ball.Y < c.Y+c.Height/2 && !(c.Y < 0) {
+	if g.ball.Position.Y < c.Y+c.Height/2 && !(c.Y < 0) {
 		c.MoveUp()
 	}
 
-	if g.ball.Y > c.Y+c.Height/2 && !(c.Y+c.Height > screenHeight) {
+	if g.ball.Position.Y > c.Y+c.Height/2 && !(c.Y+c.Height > screenHeight) {
 		c.MoveDown()
 	}
 }
